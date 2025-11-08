@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 const originEnv = process.env.CORS_ORIGIN;
 const defaultOrigins = [
-  'https://weather-harsha.vercel.app/',
+  'https://weather-harsha.vercel.app',
   'http://localhost:3000',
   'http://localhost:5173'
 ];
@@ -32,6 +32,14 @@ app.use(morgan('dev'));
 // Health check
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
+});
+
+// Debug CORS settings
+app.get('/debug/cors', (_req, res) => {
+  res.json({ 
+    allowedOrigins,
+    corsOriginEnv: process.env.CORS_ORIGIN || 'not set'
+  });
 });
 
 // API routes
