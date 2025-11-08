@@ -10,23 +10,22 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const originEnv = process.env.CORS_ORIGIN;
+const defaultOrigins = [
+  'https://weather-app-front-plum.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
+
+let allowedOrigins = [...defaultOrigins];
 if (originEnv) {
-  const origins = originEnv.split(',').map((s) => s.trim()).filter(Boolean);
-  app.use(cors({ 
-    origin: origins,
-    credentials: true 
-  }));
-} else {
-  // Allow your Vercel frontend and localhost for development
-  app.use(cors({ 
-    origin: [
-      'https://weather-app-front-plum.vercel.app',
-      'http://localhost:3000',
-      'http://localhost:5173'
-    ],
-    credentials: true 
-  }));
+  const customOrigins = originEnv.split(',').map((s) => s.trim()).filter(Boolean);
+  allowedOrigins = [...new Set([...defaultOrigins, ...customOrigins])];
 }
+
+app.use(cors({ 
+  origin: allowedOrigins,
+  credentials: true 
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 
