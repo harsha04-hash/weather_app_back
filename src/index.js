@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 const originEnv = process.env.CORS_ORIGIN;
 const defaultOrigins = [
-  'https://weather-app-front-plum.vercel.app',
+  'https://weather-harsha.vercel.app/',
   'http://localhost:3000',
   'http://localhost:5173'
 ];
